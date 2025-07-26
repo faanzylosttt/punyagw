@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login CPanel - Wanz Official</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(160deg, #0f172a, #1e293b);
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      margin-top: 30px;
+      text-shadow: 0 0 20px #38bdf8, 0 0 40px #1ba1f3;
+      font-size: 2.4rem;
+      animation: glitch 1.5s infinite;
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 0 0 4px #38bdf8, 0 0 6px #1ba1f3; }
+      50% { text-shadow: 1px 1px 2px #1ba1f3, -1px -1px 3px #38bdf8; }
+      100% { text-shadow: 0 0 4px #38bdf8, 0 0 6px #1ba1f3; }
+    }
+
+    .login-box {
+      background: rgba(30, 41, 59, 0.6);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(27, 161, 243, 0.5);
+      backdrop-filter: blur(12px);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      font-family: 'Orbitron', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    input {
+      background: #1e293b;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1ba1f3;
+      box-shadow: 0 0 8px #1ba1f3;
+    }
+
+    button {
+      background: linear-gradient(145deg, #1ba1f3, #38bdf8);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: linear-gradient(145deg, #0ea5e9, #67e8f9);
+      transform: scale(1.03);
+      box-shadow: 0 0 12px #38bdf8;
+    }
+
+    .upload-container {
+      border: 2px dashed #1ba1f3;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      color: #7dd3fc;
+      font-weight: bold;
+      background: rgba(30, 41, 59, 0.5);
+    }
+
+    .upload-container:hover {
+      background: rgba(56, 189, 248, 0.1);
+      transform: scale(1.02);
+    }
+
+    footer {
+      margin-top: auto;
+      color: #64748b;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .popup-content {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      color: #f1f5f9;
+      box-shadow: 0 0 20px #1ba1f3;
+      animation: zoomIn 0.3s ease;
+      max-width: 320px;
+      position: relative;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .scan-line {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 4px;
+      background: limegreen;
+      box-shadow: 0 0 12px limegreen;
+      animation: scan 1.5s linear infinite alternate;
+    }
+
+    @keyframes scan {
+      0% { top: 0; }
+      100% { top: calc(100% - 4px); }
+    }
+
+    #scan-image {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px #38bdf8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Login CPanel</h1>
+  <div class="login-box">
+    <p>Gunakan Username & Password atau unggah ID Card untuk login.</p>
+    <input type="text" id="username" placeholder="Masukkan Username">
+    <input type="password" id="password" placeholder="Masukkan Password">
+    <button onclick="manualLogin()">Login</button>
+
+    <div class="upload-container" onclick="document.getElementById('card-upload').click()">
+      Klik untuk unggah ID Card
+      <input type="file" id="card-upload" accept="image/*" style="display:none" onchange="scanCard(event)">
+    </div>
+  </div>
+
+  <footer>© 2025 Wanz Official</footer>
+
+  <!-- Popup umum -->
+  <div class="popup" id="popup">
+    <div class="popup-content" id="popup-content"></div>
+  </div>
+
+  <!-- Popup scanning -->
+  <div class="popup" id="scan-popup">
+    <div class="popup-content">
+      <div class="scan-line"></div>
+      <img id="scan-image" src="" alt="Scanning ID Card">
+    </div>
+  </div>
+
+  <script>
+    function showPopup(message) {
+      const popup = document.getElementById('popup');
+      document.getElementById('popup-content').innerHTML = `<p>${message}</p><button onclick="closePopup()">Tutup</button>`;
+      popup.style.display = 'flex';
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+
+    async function manualLogin() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      if (!username || !password) return showPopup("Silakan isi Username dan Password.");
+      checkLogin(username, password);
+    }
+
+    async function scanCard(event) {
+      const file = event.target.files[0];
+      if (!file) return showPopup("Tidak ada file yang dipilih.");
+      const scanPopup = document.getElementById('scan-popup');
+      const scanImage = document.getElementById('scan-image');
+      scanImage.src = URL.createObjectURL(file);
+      scanPopup.style.display = 'flex';
+
+      try {
+        const { data: { text } } = await Tesseract.recognize(file, 'eng', {
+          tessedit_char_whitelist: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.:=_ ',
+          preserve_interword_spaces: 1
+        });
+
+        scanPopup.style.display = 'none';
+
+        let cleanedText = text.toLowerCase()
+          .replace(/[^a-z0-9@._:=\s]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        const res = await fetch("https://raw.githubusercontent.com/wanz-code/CreatePanel/main/user.json");
+        const users = await res.json();
+
+        let matchUser = null;
+        for (const user of users) {
+          const u = user.username.toLowerCase();
+          const p = user.password.toLowerCase();
+          const uFound = cleanedText.includes(u);
+          const pFound = cleanedText.includes(p);
+          if (uFound && pFound) {
+            matchUser = user;
+            break;
+          }
+          const uPart = u.slice(0, 4);
+          const pPart = p.slice(0, 3);
+          if (cleanedText.includes(uPart) && cleanedText.includes(pPart)) {
+            matchUser = user;
+            break;
+          }
+        }
+
+        if (!matchUser) return showPopup("Gagal deteksi akun dari ID Card.\nPastikan gambar tidak terlalu blur.");
+        if (matchUser.status === "suspended") return showPopup("Akun Anda disuspend.");
+        if (matchUser.status === "expired" || new Date(matchUser.expiresAt) < new Date())
+          return showPopup("Akun Anda expired. Silakan perpanjang.");
+
+        showPopup(`Login berhasil! Selamat datang, ${matchUser.username}.`);
+        setTimeout(() => window.location.href = "login.html", 2000);
+      } catch (err) {
+        scanPopup.style.display = 'none';
+        showPopup("Kesalahan saat memindai ID Card.");
+      }
+    }
+
+    async function checkLogin(username, password) {
+      try {
+        const res = await fetch("https://raw.githubusercontent.com/wanz-code/CreatePanel/main/user.json");
+        const users = await res.json();
+        const user = users.find(u => u.username === username && u.password === password);
+        if (!user) return showPopup("Akses ditolak: Akun tidak ditemukan.");
+        if (user.status === "suspended") return showPopup("Akun Anda disuspend.");
+        if (user.status === "expired" || new Date(user.expiresAt) < new Date())
+          return showPopup("Akun Anda expired. Silakan perpanjang.");
+        showPopup("Login berhasil! Selamat datang");
+        setTimeout(() => window.location.href = "login.html", 2000);
+      } catch (err) {
+        showPopup("Gagal terhubung ke server.");
+      }
+    }
+  </script>
+</body>
+</html>
