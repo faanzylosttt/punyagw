@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faanzy OFFICIAL - CREATE PANEL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
@@ -23,22 +22,12 @@
             --shadow-color: rgba(0, 0, 0, 0.7);
             --gradient-1: linear-gradient(90deg, #61dafb 0%, #a464f4 100%);
             --gradient-2: linear-gradient(90deg, #a464f4 0%, #61dafb 100%);
-            --neon-blue: #00f2ff;
-            --neon-purple: #bd00ff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b), 
-                        url('https://files.catbox.moe/a8uk9h.jpg') no-repeat center center fixed;
+            background: url('https://files.catbox.moe/a8uk9h.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-blend-mode: multiply;
             color: var(--text-color);
             margin: 0;
             padding: 20px;
@@ -59,11 +48,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, rgba(13, 17, 23, 0.9) 0%, rgba(13, 17, 23, 0.95) 100%);
+            background-color: rgba(13, 17, 23, 0.85);
             z-index: -1;
         }
 
-        /* Watermark */
         .watermark {
             position: fixed;
             bottom: 10px;
@@ -71,11 +59,8 @@
             font-size: 12px;
             color: rgba(201, 209, 217, 0.5);
             z-index: 1000;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
         }
 
-        /* Status Bar */
         .status-bar {
             position: fixed;
             top: 0;
@@ -87,9 +72,6 @@
             box-sizing: border-box;
             z-index: 1000;
             font-size: 14px;
-            background: rgba(13, 17, 23, 0.8);
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid var(--border-color);
         }
 
         .status-left {
@@ -127,36 +109,6 @@
         .signal-bar:nth-child(3) { height: 10px; }
         .signal-bar:nth-child(4) { height: 13px; }
 
-        /* Header Animation */
-        .header-container {
-            position: relative;
-            text-align: center;
-            margin-bottom: 25px;
-            width: 100%;
-        }
-
-        .neon-border {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid transparent;
-            border-image: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)) 1;
-            border-image-slice: 1;
-            z-index: 1;
-            animation: neonGlow 3s linear infinite;
-            border-radius: 15px;
-            pointer-events: none;
-        }
-
-        @keyframes neonGlow {
-            0% { opacity: 0.8; box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-purple); }
-            50% { opacity: 1; box-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-purple); }
-            100% { opacity: 0.8; box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-purple); }
-        }
-
-        /* Container */
         .container {
             background-color: var(--container-bg);
             padding: 40px;
@@ -190,8 +142,6 @@
             font-weight: 700;
             letter-spacing: 0.05em;
             text-shadow: 0 0 10px rgba(97, 218, 251, 0.4);
-            position: relative;
-            z-index: 2;
         }
 
         .subtitle {
@@ -203,32 +153,11 @@
             font-weight: 500;
             letter-spacing: 0.05em;
             text-shadow: 0 0 8px rgba(164, 100, 244, 0.3);
-            position: relative;
-            z-index: 2;
         }
 
-        /* Greeting */
-        .greeting {
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            font-weight: 600;
-            color: var(--primary-accent);
-            text-align: center;
-            animation: popIn 0.5s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Form Elements */
         .form-group {
             margin-bottom: 25px;
             position: relative;
-            width: 100%;
         }
 
         label {
@@ -240,10 +169,6 @@
             transition: color 0.2s ease;
         }
 
-        .input-container {
-            position: relative;
-        }
-
         .input-glow-border {
             width: 100%;
             padding: 14px 18px;
@@ -253,7 +178,7 @@
             color: var(--text-color);
             font-size: 1em;
             box-sizing: border-box;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .input-glow-border::placeholder {
@@ -264,14 +189,6 @@
             border-color: var(--primary-accent);
             box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.3);
             outline: none;
-        }
-
-        .input-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--placeholder-color);
         }
 
         select.input-glow-border {
@@ -285,18 +202,16 @@
             padding-right: 35px;
         }
 
-        /* Server Status */
         .server-status {
             width: 100%;
             margin-bottom: 20px;
-            padding: 15px;
+            padding: 10px;
             border-radius: 8px;
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            gap: 8px;
         }
 
         .server-status-item {
@@ -304,18 +219,10 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.9em;
-            padding: 5px 0;
         }
 
         .server-status-label {
             color: var(--placeholder-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .server-status-icon {
-            font-size: 1.1em;
         }
 
         .server-status-value {
@@ -334,7 +241,6 @@
             color: orange;
         }
 
-        /* Button Style */
         .cyber-button {
             width: 100%;
             padding: 16px;
@@ -355,7 +261,6 @@
             justify-content: center;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            z-index: 2;
         }
 
         .cyber-button:hover {
@@ -403,7 +308,6 @@
             border-color: #30363d;
         }
 
-        /* Loader/Spinner Style */
         .loader-dots {
             display: flex;
             align-items: center;
@@ -435,7 +339,6 @@
             to { transform: translateY(-5px); }
         }
 
-        /* Message/Result Display */
         #responseMessage {
             margin-top: 30px;
             padding: 25px;
@@ -446,7 +349,6 @@
             opacity: 0;
             transform: translateY(20px);
             animation: messageEntry 0.5s ease-out forwards 0.2s;
-            width: 100%;
         }
 
         @keyframes messageEntry {
@@ -537,8 +439,6 @@
             border: 1px solid var(--border-color);
             white-space: nowrap;
             transition: all 0.2s ease;
-            border-radius: 6px;
-            cursor: pointer;
         }
 
         .result-actions button:hover {
@@ -565,9 +465,6 @@
             padding: 14px;
             border-radius: 8px;
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
         }
 
         .copy-all-button:hover {
@@ -604,10 +501,8 @@
             background: transparent;
             border: none;
             cursor: pointer;
-            z-index: 100;
         }
 
-        /* Popup Styles */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -688,11 +583,6 @@
             transition: all 0.3s ease;
             background-image: var(--gradient-1);
             color: var(--bg-color);
-            width: 100%;
-            margin: 5px 0;
-            text-align: center;
-            text-decoration: none;
-            display: block;
         }
 
         .popup-button:hover {
@@ -700,7 +590,122 @@
             transform: translateY(-2px);
         }
 
-        /* Logout button */
+        .select-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .select-wrapper select {
+            transition: all 0.3s ease;
+        }
+
+        .select-wrapper:hover select {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        select.input-glow-border option {
+            animation: slideDown 0.3s ease forwards;
+            opacity: 0;
+        }
+
+        select.input-glow-border option:nth-child(1) { animation-delay: 0.05s; }
+        select.input-glow-border option:nth-child(2) { animation-delay: 0.1s; }
+        select.input-glow-border option:nth-child(3) { animation-delay: 0.15s; }
+        select.input-glow-border option:nth-child(4) { animation-delay: 0.2s; }
+        select.input-glow-border option:nth-child(5) { animation-delay: 0.25s; }
+        select.input-glow-border option:nth-child(6) { animation-delay: 0.3s; }
+        select.input-glow-border option:nth-child(7) { animation-delay: 0.35s; }
+        select.input-glow-border option:nth-child(8) { animation-delay: 0.4s; }
+        select.input-glow-border option:nth-child(9) { animation-delay: 0.45s; }
+        select.input-glow-border option:nth-child(10) { animation-delay: 0.5s; }
+        select.input-glow-border option:nth-child(11) { animation-delay: 0.55s; }
+
+        #infoPopup {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #infoPopup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #infoPopup .popup-container {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        #infoPopup.active .popup-container {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--container-bg);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease-out forwards;
+            border: 1px solid var(--border-color);
+        }
+
+        .toast-notification.success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .toast-notification.error {
+            border-left: 4px solid var(--error-color);
+        }
+
+        .toast-notification.info {
+            border-left: 4px solid var(--primary-accent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        }
+
+        .greeting-message {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #58a6ff;
+            animation: popIn 0.5s ease;
+            text-align: center;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         .logout-btn {
             position: fixed;
             top: 15px;
@@ -710,117 +715,7 @@
             cursor: pointer;
             font-size: 1.8em;
             color: #fff;
-            z-index: 1001;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            color: var(--primary-accent);
-            transform: rotate(15deg);
-        }
-
-        /* Floating particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: var(--primary-accent);
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: floatParticle linear infinite;
-        }
-
-        @keyframes floatParticle {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .container {
-                padding: 25px;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            .subtitle {
-                font-size: 1em;
-            }
-            
-            .cyber-button {
-                padding: 14px;
-                font-size: 1em;
-            }
-            
-            .result-actions button {
-                flex: 1 1 100%;
-                max-width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px 15px;
-            }
-            
-            .form-group {
-                margin-bottom: 20px;
-            }
-            
-            .input-glow-border {
-                padding: 12px 15px;
-            }
-        }
-
-        /* Toast notifications */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 8px;
-            background: var(--container-bg);
-            color: var(--text-color);
-            border-left: 4px solid var(--success-color);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 10000;
-            transform: translateX(100%);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        
-        .toast.show {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        
-        .toast.error {
-            border-left-color: var(--error-color);
-        }
-        
-        .toast.info {
-            border-left-color: var(--primary-accent);
-        }
-        
-        .toast i {
-            font-size: 1.2em;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -837,90 +732,68 @@
                     <div class="signal-bar"></div>
                     <div class="signal-bar"></div>
                 </div>
-                <span id="network-speed">5G</span>
+                <span id="network-speed">4G</span>
             </div>
         </div>
     </div>
-    
-    <button class="logout-btn" title="Logout" onclick="logout()">
-        <i class="fas fa-sign-out-alt"></i>
-    </button>
-    
+
+    <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+
     <div class="watermark">Faanzy Official Panel</div>
 
     <div class="container">
-        <div class="header-container">
-            <div class="neon-border"></div>
-            <h1>Faanzy OFFICIAL</h1>
-            <div class="subtitle">CREATE PANEL WITH WEBSITE</div>
-        </div>
-        
-        <div class="greeting" id="greeting"></div>
+        <div class="greeting-message" id="greetingMessage"></div>
+        <h1>Faanzy OFFICIAL</h1>
+        <div class="subtitle">CREATE PANEL DENGAN WEBSITE</div>
 
         <form id="createPanelForm">
             <div class="form-group">
                 <label for="accessKey">Access Key:</label>
-                <div class="input-container">
-                    <input type="password" id="accessKey" name="accessKey" placeholder="Masukkan Access Key Anda" class="input-glow-border" required>
-                    <i class="fas fa-key input-icon"></i>
-                </div>
+                <input type="password" id="accessKey" name="accessKey" placeholder="Masukkan Access Key Anda" class="input-glow-border" required>
             </div>
 
             <div class="form-group">
                 <label for="panelType">Server:</label>
-                <div class="input-container">
-                    <select id="panelType" name="panelType" class="input-glow-border" required>
-                        <option value="" disabled selected>Pilih Server</option>
-                        <option value="server1">Server 1</option>
-                        <option value="server2">Server 2</option>
-                    </select>
-                    <i class="fas fa-server input-icon"></i>
-                </div>
+                <select id="panelType" name="panelType" class="input-glow-border" required>
+                    <option value="" disabled selected>Pilih Server</option>
+                    <option value="server1">Server 1</option>
+                    <option value="server2">Server 2</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="username">Username:</label>
-                <div class="input-container">
-                    <input type="text" id="username" name="username" placeholder="Example : faanzyganteng" class="input-glow-border" required minlength="4" maxlength="16" pattern="^[a-zA-Z0-9_.-]+$" title="Hanya huruf, angka, underscore, titik, atau dash. Minimal 4, Maksimal 16 karakter.">
-                    <i class="fas fa-user input-icon"></i>
-                </div>
+                <input type="text" id="username" name="username" placeholder="Example : faanzyganteng" class="input-glow-border" required minlength="4" maxlength="16" pattern="^[a-zA-Z0-9_.-]+$" title="Hanya huruf, angka, underscore, titik, atau dash. Minimal 4, Maksimal 16 karakter.">
             </div>
 
             <div class="form-group">
                 <label for="hostingPackage">Spesifikasi Panel:</label>
-                <div class="input-container">
+                <div class="select-wrapper">
                     <select id="hostingPackage" name="hostingPackage" class="input-glow-border" required>
                         <option value="" disabled selected>Pilih Spesifikasi</option>
-                        <option value="1gb">1 GB</option>
-                        <option value="2gb">2 GB</option>
-                        <option value="3gb">3 GB</option>
-                        <option value="4gb">4 GB</option>
-                        <option value="5gb">5 GB</option>
-                        <option value="6gb">6 GB</option>
-                        <option value="7gb">7 GB</option>
-                        <option value="8gb">8 GB</option>
-                        <option value="9gb">9 GB</option>
-                        <option value="10gb">10 GB</option>
                         <option value="unlimited">Unlimited</option>
+                        <option value="10gb">10 GB</option>
+                        <option value="9gb">9 GB</option>
+                        <option value="8gb">8 GB</option>
+                        <option value="7gb">7 GB</option>
+                        <option value="6gb">6 GB</option>
+                        <option value="5gb">5 GB</option>
+                        <option value="4gb">4 GB</option>
+                        <option value="3gb">3 GB</option>
+                        <option value="2gb">2 GB</option>
+                        <option value="1gb">1 GB</option>
                     </select>
-                    <i class="fas fa-microchip input-icon"></i>
                 </div>
             </div>
 
             <div class="server-status">
                 <div class="server-status-item">
-                    <span class="server-status-label">
-                        <i class="fas fa-server server-status-icon"></i>
-                        Server 1:
-                    </span>
-                    <span class="server-status-value status-active" id="server1-status">AKTIF</span>
+                    <span class="server-status-label">Server 1:</span>
+                    <span class="server-status-value status-inactive" id="server1-status">Mengecek status...</span>
                 </div>
                 <div class="server-status-item">
-                    <span class="server-status-label">
-                        <i class="fas fa-server server-status-icon"></i>
-                        Server 2:
-                    </span>
-                    <span class="server-status-value status-active" id="server2-status">AKTIF</span>
+                    <span class="server-status-label">Server 2:</span>
+                    <span class="server-status-value status-inactive" id="server2-status">Mengecek status...</span>
                 </div>
             </div>
 
@@ -943,18 +816,14 @@
             <button class="popup-close" id="contactCloseBtn">&times;</button>
             <div class="popup-title">Hubungi Admin Faanzy</div>
             <div class="popup-message">Silakan pilih salah satu platform di bawah:</div>
-            <div style="display:flex; flex-direction:column; gap:10px;">
-                <a href="https://wa.me/6283898206223" target="_blank" class="popup-button">
-                    <i class="fab fa-whatsapp"></i> WhatsApp Admin
-                </a>
-                <a href="https://t.me/wanda_ginting" target="_blank" class="popup-button">
-                    <i class="fab fa-telegram"></i> Telegram Admin
-                </a>
+            <div style="display:flex; flex-direction:column; gap:15px;">
+                <a href="https://wa.me/6283898206223" target="_blank" class="popup-button">WhatsApp Admin</a>
+                <a href="https://t.me/wanda_ginting" target="_blank" class="popup-button">Telegram Admin</a>
             </div>
         </div>
     </div>
 
-    <!-- Popup Overlay -->
+    <!-- Error Popup -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-container">
             <button class="popup-close" id="popupCloseBtn">&times;</button>
@@ -967,225 +836,40 @@
         </div>
     </div>
 
-    <div class="particles" id="particles"></div>
-    
-    <footer style="text-align:center; color:#8b949e; margin-top:50px; padding: 20px 0;">
-        © 2023 Faanzy Official - Premium Hosting Solutions
-    </footer>
+    <!-- Info Popup -->
+    <div class="popup-overlay" id="infoPopup">
+        <div class="popup-container">
+            <button class="popup-close" id="infoPopupClose">&times;</button>
+            <div class="popup-title" id="infoPopupTitle">Loading...</div>
+            <div class="popup-message" id="infoPopupMessage">Silakan tunggu...</div>
+        </div>
+    </div>
 
+    <footer style="text-align:center; color:#8b949e; margin-top:50px;">© Faanzy Official</footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script>
-        // Konfigurasi
-        const WEBSITE_ACCESS_KEY = "Faanzy-INFINITY2025";
-        const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
-        const TELEGRAM_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID";
-        const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-        
-        // Variabel global untuk menyimpan konfigurasi panel
-        let panelConfig = {
-            server1: { domain: "", ptla: "", ptlc: "" },
-            server2: { domain: "", ptla: "", ptlc: "" }
-        };
-
-        const PACKAGES = {
-            "1gb": { ram: 1024, disk: 10240, cpu: 100, swap: 0, io: 500, databases: 1, backups: 1 },
-            "2gb": { ram: 2048, disk: 20480, cpu: 100, swap: 0, io: 500, databases: 2, backups: 2 },
-            "3gb": { ram: 3072, disk: 30720, cpu: 100, swap: 0, io: 500, databases: 3, backups: 3 },
-            "4gb": { ram: 4096, disk: 40960, cpu: 100, swap: 0, io: 500, databases: 4, backups: 4 },
-            "5gb": { ram: 5120, disk: 51200, cpu: 100, swap: 0, io: 500, databases: 5, backups: 5 },
-            "6gb": { ram: 6144, disk: 61440, cpu: 100, swap: 0, io: 500, databases: 6, backups: 6 },
-            "7gb": { ram: 7168, disk: 71680, cpu: 100, swap: 0, io: 500, databases: 7, backups: 7 },
-            "8gb": { ram: 8192, disk: 81920, cpu: 100, swap: 0, io: 500, databases: 8, backups: 8 },
-            "9gb": { ram: 9216, disk: 92160, cpu: 100, swap: 0, io: 500, databases: 9, backups: 9 },
-            "10gb": { ram: 10240, disk: 102400, cpu: 200, swap: 0, io: 500, databases: 10, backups: 10 },
-            "unlimited": { ram: 10240, disk: 102400, cpu: 200, swap: 0, io: 500, databases: -1, backups: -1 }
-        };
-
-        // Fungsi untuk membuat partikel
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Set random position
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                // Set random size
-                const size = Math.random() * 3 + 1;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Set random animation duration
-                const duration = Math.random() * 20 + 10;
-                particle.style.animationDuration = `${duration}s`;
-                
-                // Set random delay
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
-        // Fungsi untuk menampilkan toast
-        function showToast(type, message) {
-            const toast = document.createElement('div');
-            toast.classList.add('toast', type);
-            
-            let icon = '';
-            if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
-            else if (type === 'error') icon = '<i class="fas fa-times-circle"></i>';
-            else icon = '<i class="fas fa-info-circle"></i>';
-            
-            toast.innerHTML = `
-                ${icon}
-                <span>${message}</span>
-            `;
-            
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 100);
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    toast.remove();
-                }, 300);
-            }, 3000);
-        }
-        
-        // Fungsi logout
-        function logout() {
-            localStorage.removeItem("loggedIn");
-            localStorage.removeItem("username");
-            showToast('info', 'Anda telah logout');
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 1500);
-        }
-        
-        // Fungsi untuk mengirim notifikasi ke Telegram
-        async function sendTelegramNotification(panelData) {
-            if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
-            
-            const now = new Date();
-            const formattedTime = now.toLocaleString('id-ID', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-
-            const message = `
-📢 *PANEL BARU DIBUAT* 📢
-━━━━━━━━━━━━━━━━━━━━━━━
-👤 *User*: ${panelData.username}
-🆔 *ID User*: ${panelData.user_id}
-🖥️ *Panel*: ${panelData.panel_domain}
-📌 *Server*: ${panelData.server_type.toUpperCase()}
-💾 *Spesifikasi*: ${panelData.package.toUpperCase()}
-🆔 *Server ID*: ${panelData.server_id}
-⏰ *Waktu*: ${formattedTime}
-━━━━━━━━━━━━━━━━━━━━━━━
-✅ Panel berhasil dibuat
-            `;
-
-            try {
-                const response = await fetch(TELEGRAM_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'Markdown'
-                    })
-                });
-
-                const data = await response.json();
-                if (!data.ok) {
-                    console.error('Gagal mengirim notifikasi Telegram:', data);
-                }
-            } catch (error) {
-                console.error('Error mengirim notifikasi Telegram:', error);
-            }
-        }
-
-        // Fungsi untuk memuat konfigurasi panel dari panel.json
-        async function loadPanelConfig() {
-            try {
-                const response = await fetch('panel.json');
-                if (!response.ok) {
-                    throw new Error('Gagal memuat panel.json');
-                }
-                const config = await response.json();
-                
-                // Validasi konfigurasi
-                if (config.server1 && config.server2) {
-                    panelConfig = {
-                        server1: {
-                            domain: config.server1.domain || "",
-                            ptla: config.server1.ptla || "",
-                            ptlc: config.server1.ptlc || ""
-                        },
-                        server2: {
-                            domain: config.server2.domain || "",
-                            ptla: config.server2.ptla || "",
-                            ptlc: config.server2.ptlc || ""
-                        }
-                    };
-                    
-                    // Update status server
-                    document.getElementById('server1-status').textContent = panelConfig.server1.domain ? "AKTIF" : "OFFLINE";
-                    document.getElementById('server2-status').textContent = panelConfig.server2.domain ? "AKTIF" : "OFFLINE";
-                    
-                    return true;
-                }
-                throw new Error('Format panel.json tidak valid');
-            } catch (error) {
-                console.error('Error loading panel config:', error);
-                showToast('error', 'Gagal memuat konfigurasi server');
-                return false;
-            }
-        }
-
-        // Fungsi untuk membuat server melalui API
-        async function createServer(serverType, username, packageType) {
-            const packageSpec = PACKAGES[packageType];
-            if (!packageSpec) {
-                throw new Error('Paket tidak valid');
-            }
-            
-            const serverConfig = panelConfig[serverType];
-            if (!serverConfig.domain || !serverConfig.ptla || !serverConfig.ptlc) {
-                throw new Error('Konfigurasi server tidak lengkap');
-            }
-            
-            // Simulasi pembuatan server (dalam implementasi nyata, ini akan memanggil API)
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve({
-                        username: username,
-                        password: "FaanzyPass" + Math.floor(Math.random() * 1000),
-                        id_user: "user_" + Math.floor(Math.random() * 10000),
-                        id_server: "svr_" + Math.floor(Math.random() * 10000),
-                        domain: serverConfig.domain,
-                        package: packageType
-                    });
-                }, 2000);
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            
+            // Konfigurasi
+            const WEBSITE_ACCESS_KEY = "Faanzy-INFINITY2025";
+            const BASE_URL_PTERODACTYL_API = "https://restapi.mat.web.id/api/pterodactyl/create?username=&ram=&disk=&cpu=&eggid=&nestid=&loc=&domain=&ptla=&ptlc=";
+            const TELEGRAM_BOT_TOKEN = "8102671545:AAEbT25jA8_n9136iT7YlbUQQueFAXaj9T4"; // Ganti dengan token bot Telegram Anda
+            const TELEGRAM_CHAT_ID = "7274253936"; // Ganti dengan chat ID tujuan
+
+            const PACKAGES = {
+                "1gb": { ram: 1024, disk: 1024, cpu: 100, name: "1 GB" },
+                "2gb": { ram: 2048, disk: 2048, cpu: 100, name: "2 GB" },
+                "3gb": { ram: 3072, disk: 3072, cpu: 100, name: "3 GB" },
+                "4gb": { ram: 4096, disk: 4096, cpu: 100, name: "4 GB" },
+                "5gb": { ram: 5120, disk: 5120, cpu: 100, name: "5 GB" },
+                "6gb": { ram: 6144, disk: 6144, cpu: 100, name: "6 GB" },
+                "7gb": { ram: 7168, disk: 7168, cpu: 100, name: "7 GB" },
+                "8gb": { ram: 8192, disk: 8192, cpu: 100, name: "8 GB" },
+                "9gb": { ram: 9216, disk: 9216, cpu: 100, name: "9 GB" },
+                "10gb": { ram: 10240, disk: 10240, cpu: 200, name: "10 GB" },
+                "unlimited": { ram: 0, disk: 0, cpu: 0, name: "Unlimited" }
+            };
+
             // Elemen DOM
             const createPanelForm = document.getElementById('createPanelForm');
             const createButton = document.getElementById('createButton');
@@ -1195,26 +879,43 @@
             const requestKeyButton = document.getElementById('requestKeyButton');
             const currentTimeElement = document.getElementById('current-time');
             const networkSpeedElement = document.getElementById('network-speed');
-            const greetingElement = document.getElementById('greeting');
-            const usernameInput = document.getElementById('username');
+            const server1Status = document.getElementById('server1-status');
+            const server2Status = document.getElementById('server2-status');
+            const greetingMessage = document.getElementById('greetingMessage');
 
-            // Muat konfigurasi panel saat pertama kali load
-            loadPanelConfig();
+            // Fungsi untuk mengirim notifikasi ke Telegram
+            async function sendTelegramNotification(message) {
+                if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+                
+                try {
+                    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    if (!data.ok) {
+                        console.error('Error sending Telegram notification:', data);
+                    }
+                } catch (error) {
+                    console.error('Error sending Telegram notification:', error);
+                }
+            }
 
             // Update waktu
             function updateTime() {
-                const now = new Date();
+                const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Jakarta" }));
                 const hours = now.getHours().toString().padStart(2, '0');
                 const minutes = now.getMinutes().toString().padStart(2, '0');
                 currentTimeElement.textContent = `${hours}:${minutes}`;
-                
-                // Update greeting based on time
-                let waktu = "Pagi";
-                if (hours >= 11 && hours < 15) waktu = "Siang";
-                else if (hours >= 15 && hours < 18) waktu = "Sore";
-                else if (hours >= 18) waktu = "Malam";
-                
-                greetingElement.textContent = `Halo, Selamat ${waktu}!`;
             }
 
             setInterval(updateTime, 1000);
@@ -1222,13 +923,26 @@
 
             // Update status jaringan
             function updateNetworkStatus() {
-                const speeds = ['3G', '4G', '5G'];
+                const speeds = ['2G', '3G', '4G', '5G'];
                 const randomSpeed = speeds[Math.floor(Math.random() * speeds.length)];
                 networkSpeedElement.textContent = randomSpeed;
             }
 
             setInterval(updateNetworkStatus, 5000);
             updateNetworkStatus();
+
+            // Tampilkan pesan sapaan berdasarkan waktu
+            function updateGreeting() {
+                const hours = new Date().getHours();
+                let waktu = "Pagi";
+                if (hours >= 11 && hours < 15) waktu = "Siang";
+                else if (hours >= 15 && hours < 18) waktu = "Sore";
+                else if (hours >= 18) waktu = "Malam";
+
+                greetingMessage.textContent = `Selamat ${waktu}!`;
+            }
+
+            updateGreeting();
 
             // Tampilkan popup
             function showPopup(title, message, type = 'error') {
@@ -1259,6 +973,37 @@
             document.getElementById('contactCloseBtn').addEventListener('click', () => {
                 document.getElementById('contactPopup').classList.remove('active');
             });
+
+            // Fungsi toast
+            function showToast(type, message) {
+                const toast = document.createElement('div');
+                toast.className = `toast-notification ${type}`;
+
+                let icon = '';
+                if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
+                else if (type === 'error') icon = '<i class="fas fa-times-circle"></i>';
+                else icon = '<i class="fas fa-info-circle"></i>';
+
+                toast.innerHTML = `
+                    <span class="icon">${icon}</span>
+                    <span class="message">${message}</span>
+                    <button class="close-btn">&times;</button>
+                `;
+
+                document.body.appendChild(toast);
+
+                const closeBtn = toast.querySelector('.close-btn');
+                closeBtn.addEventListener('click', () => {
+                    toast.remove();
+                });
+
+                setTimeout(() => {
+                    toast.style.animation = 'fadeOut 0.5s ease-in forwards';
+                    toast.addEventListener('animationend', () => {
+                        toast.remove();
+                    });
+                }, 5000);
+            }
 
             // Form submission
             createPanelForm.addEventListener('submit', async (event) => {
@@ -1294,6 +1039,7 @@
                 }
 
                 // Validasi username
+                const usernameInput = document.getElementById('username');
                 if (!usernameInput.checkValidity()) {
                     showPopup('Username Tidak Valid!', `Username tidak valid: ${usernameInput.title}`, 'error');
                     createButton.textContent = 'CREATE PANEL';
@@ -1302,24 +1048,49 @@
                     return;
                 }
 
+                // Pilih konfigurasi server
+                const panelJson = await (await fetch('panel.json')).json();
+                const currentPanelConfig = selectedPanelType === "server1" 
+                    ? panelJson.server1 
+                    : panelJson.server2;
+                currentPanelConfig.eggId = "15";
+                currentPanelConfig.nestId = "5";
+                currentPanelConfig.loc = "1";
+
+                // Mapping Spesifikasi
+                const packageSpec = PACKAGES[hostingPackage];
+                if (!packageSpec) {
+                    showPopup('Paket Tidak Valid!', 'Pilih Spesifikasi Panel yang valid.', 'error');
+                    createButton.textContent = 'CREATE PANEL';
+                    createButton.disabled = false;
+                    loadingSpinner.style.display = 'none';
+                    return;
+                }
+
+                const { ram, disk, cpu } = packageSpec;
+
+                // Buat URL API
+                const finalUrl = BASE_URL_PTERODACTYL_API
+                    .replace('username=', `username=${encodeURIComponent(username)}`)
+                    .replace('ram=', `ram=${ram}`)
+                    .replace('disk=', `disk=${disk}`)
+                    .replace('cpu=', `cpu=${cpu}`)
+                    .replace('eggid=', `eggid=${currentPanelConfig.eggId}`)
+                    .replace('nestid=', `nestid=${currentPanelConfig.nestId}`)
+                    .replace('loc=', `loc=${currentPanelConfig.loc}`)
+                    .replace('domain=', `domain=${encodeURIComponent(currentPanelConfig.domain)}`)
+                    .replace('ptla=', `ptla=${currentPanelConfig.ptla}`)
+                    .replace('ptlc=', `ptlc=${currentPanelConfig.ptlc}`);
+
                 try {
-                    // Buat server
-                    const result = await createServer(selectedPanelType, username, hostingPackage);
-                    
-                    // Data untuk notifikasi Telegram
-                    const panelData = {
-                        username: username,
-                        user_id: result.id_user,
-                        panel_domain: result.domain,
-                        server_type: selectedPanelType,
-                        package: hostingPackage,
-                        server_id: result.id_server
-                    };
+                    const response = await fetch(finalUrl, { method: 'GET' });
+                    const data = await response.json();
 
-                    // Kirim notifikasi ke Telegram
-                    await sendTelegramNotification(panelData);
+                    if (response.ok && data.status) {
+                        const result = data.result;
+                        const panelDomainUrl = result.domain;
 
-                    const fullTextToCopy = `
+                        const fullTextToCopy = `
 ━━━━━━━━━━━━━━━━━━━━━━━
        DETAIL AKUN PANEL
 ━━━━━━━━━━━━━━━━━━━━━━━
@@ -1329,42 +1100,64 @@ Spesifikasi          : ${hostingPackage.toUpperCase()}
 Server : ${selectedPanelType.toUpperCase()}  
 ID User       : ${result.id_user}  
 Server ID    : ${result.id_server}  
-Domain      : ${result.domain}  
+Domain      : ${panelDomainUrl}  
 ━━━━━━━━━━━━━━━━━━━━━━━
 Status        : Siap digunakan ✅
 ━━━━━━━━━━━━━━━━━━━━━━━
 `;
 
-                    const successMessageHTML = `
-                        <div class="result-title">Panel Berhasil Dibuat!</div>
-                        <div class="result-row"><span>Username:</span> <span id="copyUsernameValue">${result.username}</span></div>
-                        <div class="result-row"><span>Password:</span> <span id="copyPasswordValue">${result.password}</span></div>
-                        <div class="result-row"><span>Spesifikasi:</span> <span>${hostingPackage.toUpperCase()}</span></div>
-                        <div class="result-row"><span>Server:</span> <span>${selectedPanelType.toUpperCase()}</span></div>
-                        <div class="result-row"><span>ID User:</span> <span>${result.id_user}</span></div>
-                        <div class="result-row"><span>Server ID:</span> <span id="copyServerIdValue">${result.id_server}</span></div>
-                        <div class="result-row"><span>Domain:</span> <span id="copyDomainValue"><a href="https://${result.domain}" target="_blank">${result.domain}</a></span></div>
+                        // Kirim notifikasi ke Telegram
+                        const telegramMessage = `
+<b>📢 PANEL BARU DIBUAT!</b>
+━━━━━━━━━━━━━━━━━━━━━━━
+<b>Username:</b> <code>${result.username}</code>
+<b>Password:</b> <code>${result.password}</code>
+<b>Spesifikasi:</b> ${hostingPackage.toUpperCase()}
+<b>Server:</b> ${selectedPanelType.toUpperCase()}
+<b>Domain:</b> <a href="${panelDomainUrl}">${result.domain}</a>
+━━━━━━━━━━━━━━━━━━━━━━━
+<b>⏰ Waktu:</b> ${new Date().toLocaleString()}
+`;
 
-                        <div class="result-actions">
-                            <button class="copy-button" data-copy-target="copyUsernameValue">Copy Username</button>
-                            <button class="copy-button" data-copy-target="copyPasswordValue">Copy Password</button>
-                            <button class="copy-button" data-copy-target="copyServerIdValue">Copy Server ID</button>
-                            <button class="copy-button" data-copy-target="copyDomainValue">Copy Domain</button>
-                            <button class="login-panel-button" onclick="window.open('https://${result.domain}', '_blank')">Login Panel</button>
-                            <button class="copy-all-button" data-copy-value="${fullTextToCopy.trim()}">Salin Data Panel</button>
-                        </div>
-                        <p class="contact-message">
-                            Jika tidak bisa login, silakan hubungi <a href="#" onclick="document.getElementById('contactPopup').classList.add('active'); return false;">Admin</a>
-                        </p>
-                    `;
-                    responseMessageDiv.className = 'success';
-                    responseMessageDiv.innerHTML = successMessageHTML;
-                    createPanelForm.reset();
-                    showToast('success', 'Panel berhasil dibuat!');
-                    
+                        await sendTelegramNotification(telegramMessage);
+
+                        const successMessageHTML = `
+                            <div class="result-title">Panel Berhasil Dibuat!</div>
+                            <div class="result-row"><span>Username:</span> <span id="copyUsernameValue">${result.username}</span></div>
+                            <div class="result-row"><span>Password:</span> <span id="copyPasswordValue">${result.password}</span></div>
+                            <div class="result-row"><span>Spesifikasi:</span> <span>${hostingPackage.toUpperCase()}</span></div>
+                            <div class="result-row"><span>Server:</span> <span>${selectedPanelType.toUpperCase()}</span></div>
+                            <div class="result-row"><span>ID User:</span> <span>${result.id_user}</span></div>
+                            <div class="result-row"><span>Server ID:</span> <span>${result.id_server}</span></div>
+                            <div class="result-row"><span>Domain:</span> <span id="copyDomainValue"><a href="${panelDomainUrl}" target="_blank">${result.domain}</a></span></div>
+
+                            <div class="result-actions">
+                                <button class="copy-button" data-copy-target="copyUsernameValue">Copy Username</button>
+                                <button class="copy-button" data-copy-target="copyPasswordValue">Copy Password</button>
+                                <button class="copy-button" data-copy-target="copyDomainValue">Copy Domain</button>
+                                <button class="login-panel-button" onclick="window.open('${panelDomainUrl}', '_blank')">Login Panel</button>
+                                <button class="copy-all-button" data-copy-value="${fullTextToCopy.trim()}">Salin Data Panel</button>
+                            </div>
+                            <p class="contact-message">
+                                Jika tidak bisa login, silakan hubungi <a href="#" id="contactAdminBtn">Admin</a>
+                            </p>
+                        `;
+                        responseMessageDiv.className = 'success';
+                        responseMessageDiv.innerHTML = successMessageHTML;
+                        createPanelForm.reset();
+                        showToast('success', 'Panel berhasil dibuat!');
+
+                        // Tambahkan event listener untuk tombol contact admin
+                        document.getElementById('contactAdminBtn').addEventListener('click', () => {
+                            document.getElementById('contactPopup').classList.add('active');
+                        });
+                    } else {
+                        const errorMessage = data.message || (data.errors && data.errors[0] ? data.errors[0].detail : 'Terjadi kesalahan yang tidak diketahui.');
+                        showPopup('Gagal Membuat Panel!', errorMessage, 'error');
+                    }
                 } catch (error) {
                     console.error('Error:', error);
-                    showPopup('Gagal Membuat Panel!', error.message || 'Terjadi kesalahan saat membuat panel. Silakan coba lagi.', 'error');
+                    showPopup('Kesalahan Jaringan!', 'Terjadi kesalahan saat menghubungi server. Coba lagi nanti.', 'error');
                 } finally {
                     createButton.textContent = 'CREATE PANEL';
                     createButton.disabled = false;
@@ -1384,8 +1177,7 @@ Status        : Siap digunakan ✅
                         event.target.textContent = 'Copied!';
                         setTimeout(() => {
                             event.target.textContent = targetId.includes('Username') ? 'Copy Username' : 
-                                                     targetId.includes('Password') ? 'Copy Password' :
-                                                     targetId.includes('ServerId') ? 'Copy Server ID' : 'Copy Domain';
+                                                     targetId.includes('Password') ? 'Copy Password' : 'Copy Domain';
                         }, 1500);
                     } catch (err) {
                         showToast('error', 'Gagal menyalin!');
@@ -1397,7 +1189,7 @@ Status        : Siap digunakan ✅
                         showToast('info', 'Semua detail berhasil disalin!');
                         event.target.textContent = 'All Copied!';
                         setTimeout(() => {
-                            event.target.textContent = 'Salin Data Panel';
+                            event.target.textContent = 'Copy All Details';
                         }, 1500);
                     } catch (err) {
                         showToast('error', 'Gagal menyalin semua!');
@@ -1415,10 +1207,117 @@ Status        : Siap digunakan ✅
                     option.style.animation = 'slideDown 0.3s ease forwards';
                 });
             });
-            
-            // Panggil fungsi untuk menampilkan greeting
-            updateTime();
+
+            // Cek status server
+            async function checkServerStatus() {
+                try {
+                    const resPanel = await fetch('panel.json');
+                    const panelData = await resPanel.json();
+
+                    if (panelData.server1 && panelData.server1.domain) {
+                        server1Status.innerText = "AKTIF";
+                        server1Status.className = "server-status-value status-active";
+                    } else {
+                        server1Status.innerText = "TERPUTUS";
+                        server1Status.className = "server-status-value status-inactive";
+                    }
+
+                    if (panelData.server2 && panelData.server2.domain) {
+                        server2Status.innerText = "AKTIF";
+                        server2Status.className = "server-status-value status-active";
+                    } else {
+                        server2Status.innerText = "TERPUTUS";
+                        server2Status.className = "server-status-value status-inactive";
+                    }
+                } catch (err) {
+                    console.error('Gagal memuat panel.json:', err);
+                }
+            }
+
+            checkServerStatus();
+            setInterval(checkServerStatus, 60000); // Cek setiap 1 menit
+
+            // Load info dari info.json
+            async function showInfoPopup() {
+                try {
+                    const res = await fetch("info.json");
+                    const data = await res.json();
+
+                    const titleEl = document.getElementById("infoPopupTitle");
+                    const messageEl = document.getElementById("infoPopupMessage");
+                    const popupEl = document.getElementById("infoPopup");
+
+                    const { title, message, targetEndTime } = data;
+
+                    titleEl.textContent = title || "ℹ️ Info";
+
+                    if (targetEndTime) {
+                        const endTime = new Date(targetEndTime).getTime();
+
+                        const updateCountdown = () => {
+                            const now = Date.now();
+                            let diff = Math.max(0, Math.floor((endTime - now) / 1000));
+
+                            const hours = String(Math.floor(diff / 3600)).padStart(2, '0');
+                            const minutes = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+                            const seconds = String(diff % 60).padStart(2, '0');
+
+                            messageEl.textContent = `${message} ${hours}:${minutes}:${seconds}`;
+                        };
+
+                        updateCountdown();
+                        const interval = setInterval(() => {
+                            updateCountdown();
+                            if (Date.now() >= endTime) clearInterval(interval);
+                        }, 1000);
+                    } else {
+                        messageEl.textContent = message;
+                    }
+
+                    popupEl.classList.add("active");
+                    document.getElementById("infoPopupClose").addEventListener("click", () => {
+                        popupEl.classList.remove("active");
+                    });
+                } catch (err) {
+                    console.error("Gagal memuat info.json:", err);
+                }
+            }
+
+            // Tampilkan info popup setelah 3 detik
+            setTimeout(showInfoPopup, 3000);
+
+            // Personalisasi greeting berdasarkan username
+            const usernameInput = document.getElementById('username');
+            usernameInput.addEventListener('input', async () => {
+                try {
+                    const resUser = await fetch('user.json');
+                    const users = await resUser.json();
+                    const inputUsername = usernameInput.value.trim();
+
+                    const currentUser = users.find(u => u.username === inputUsername);
+
+                    if (currentUser) {
+                        const hours = new Date().getHours();
+                        let waktu = "Pagi";
+                        if (hours >= 11 && hours < 15) waktu = "Siang";
+                        else if (hours >= 15 && hours < 18) waktu = "Sore";
+                        else if (hours >= 18) waktu = "Malam";
+
+                        greetingMessage.textContent = `Halo ${currentUser.nama || currentUser.username}, Selamat ${waktu}!`;
+                    } else {
+                        updateGreeting();
+                    }
+                } catch (err) {
+                    console.error('Gagal membaca user.json:', err);
+                }
+            });
         });
+
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("username");
+            window.location.href = "index.html";
+        }
     </script>
 </body>
 </html>
