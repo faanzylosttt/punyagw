@@ -10,24 +10,33 @@
 
         :root {
             --bg-color: #0d1117;
-            --container-bg: #161b22;
+            --container-bg: rgba(22, 27, 34, 0.85);
             --border-color: #30363d;
             --text-color: #c9d1d9;
             --primary-accent: #58a6ff;
             --secondary-accent: #a464f4;
             --success-color: #3fb950;
             --error-color: #f85149;
-            --input-bg: #11141a;
+            --input-bg: rgba(17, 20, 26, 0.8);
             --placeholder-color: #8b949e;
             --shadow-color: rgba(0, 0, 0, 0.7);
             --gradient-1: linear-gradient(90deg, #61dafb 0%, #a464f4 100%);
             --gradient-2: linear-gradient(90deg, #a464f4 0%, #61dafb 100%);
         }
 
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: url('https://files.catbox.moe/a8uk9h.jpg') no-repeat center center fixed;
-            background-size: cover;
             color: var(--text-color);
             margin: 0;
             padding: 20px;
@@ -41,17 +50,54 @@
             position: relative;
         }
 
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Glow Effect for Container */
+        .container {
+            background-color: var(--container-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px var(--shadow-color),
+                        0 0 30px rgba(97, 218, 251, 0.2);
+            border: 1px solid var(--border-color);
             width: 100%;
-            height: 100%;
-            background-color: rgba(13, 17, 23, 0.85);
-            z-index: -1;
+            max-width: 500px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            animation: containerEntry 0.6s ease-out forwards 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
+        /* Neon Border Animation */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 17px;
+            background: linear-gradient(45deg, 
+                #61dafb, #a464f4, #61dafb);
+            background-size: 200% 200%;
+            z-index: -1;
+            animation: gradientBorder 3s ease infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Rest of your existing CSS remains exactly the same */
         .watermark {
             position: fixed;
             bottom: 10px;
@@ -72,6 +118,10 @@
             box-sizing: border-box;
             z-index: 1000;
             font-size: 14px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            background-color: rgba(13, 17, 23, 0.5);
+            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
         }
 
         .status-left {
@@ -109,26 +159,6 @@
         .signal-bar:nth-child(3) { height: 10px; }
         .signal-bar:nth-child(4) { height: 13px; }
 
-        .container {
-            background-color: var(--container-bg);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px var(--shadow-color);
-            border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 500px;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 10;
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-            animation: containerEntry 0.6s ease-out forwards 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px auto;
-        }
-
         @keyframes containerEntry {
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
@@ -141,7 +171,8 @@
             font-size: 2.5em;
             font-weight: 700;
             letter-spacing: 0.05em;
-            text-shadow: 0 0 10px rgba(97, 218, 251, 0.4);
+            text-shadow: 0 0 10px rgba(97, 218, 251, 0.4),
+                         0 0 20px rgba(97, 218, 251, 0.2);
         }
 
         .subtitle {
@@ -179,6 +210,8 @@
             font-size: 1em;
             box-sizing: border-box;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .input-glow-border::placeholder {
@@ -187,7 +220,8 @@
 
         .input-glow-border:focus {
             border-color: var(--primary-accent);
-            box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.3);
+            box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.3),
+                       0 0 15px rgba(97, 218, 251, 0.2);
             outline: none;
         }
 
@@ -212,6 +246,8 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .server-status-item {
@@ -231,10 +267,12 @@
 
         .status-active {
             color: var(--success-color);
+            text-shadow: 0 0 8px rgba(63, 185, 80, 0.3);
         }
 
         .status-inactive {
             color: var(--error-color);
+            text-shadow: 0 0 8px rgba(248, 81, 73, 0.3);
         }
 
         .status-warning {
@@ -261,12 +299,14 @@
             justify-content: center;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            z-index: 1;
         }
 
         .cyber-button:hover {
             background-image: var(--gradient-2);
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4),
+                        0 0 20px rgba(97, 218, 251, 0.3);
         }
 
         .cyber-button:active {
@@ -284,7 +324,7 @@
             border: 2px solid transparent;
             border-image: var(--gradient-1) 1;
             border-image-slice: 1;
-            z-index: 1;
+            z-index: -1;
             animation: cyberBorder 2s linear infinite;
         }
 
@@ -349,6 +389,8 @@
             opacity: 0;
             transform: translateY(20px);
             animation: messageEntry 0.5s ease-out forwards 0.2s;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         @keyframes messageEntry {
@@ -357,12 +399,14 @@
 
         #responseMessage.success {
             border-color: var(--success-color);
-            box-shadow: 0 8px 20px rgba(63, 185, 80, 0.2);
+            box-shadow: 0 8px 20px rgba(63, 185, 80, 0.2),
+                       0 0 15px rgba(63, 185, 80, 0.1);
         }
 
         #responseMessage.error {
             border-color: var(--error-color);
-            box-shadow: 0 8px 20px rgba(248, 81, 73, 0.2);
+            box-shadow: 0 8px 20px rgba(248, 81, 73, 0.2),
+                       0 0 15px rgba(248, 81, 73, 0.1);
         }
 
         .result-title {
@@ -538,6 +582,8 @@
             transition: all 0.3s ease;
             text-align: center;
             position: relative;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .popup-overlay.active .popup-container {
@@ -668,6 +714,8 @@
             z-index: 10000;
             animation: fadeIn 0.3s ease-out forwards;
             border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .toast-notification.success {
@@ -699,6 +747,7 @@
             color: #58a6ff;
             animation: popIn 0.5s ease;
             text-align: center;
+            text-shadow: 0 0 8px rgba(88, 166, 255, 0.3);
         }
 
         @keyframes popIn {
@@ -716,10 +765,22 @@
             font-size: 1.8em;
             color: #fff;
             z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .logout-btn:hover {
+            color: var(--primary-accent);
+            transform: rotate(90deg);
         }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
+
     <div class="status-bar">
         <div class="status-left">
             <span id="current-time">00:00</span>
@@ -817,8 +878,8 @@
             <div class="popup-title">Hubungi Admin Faanzy</div>
             <div class="popup-message">Silakan pilih salah satu platform di bawah:</div>
             <div style="display:flex; flex-direction:column; gap:15px;">
-                <a href="https://wa.me/6283898206223" target="_blank" class="popup-button">WhatsApp Admin</a>
-                <a href="https://t.me/wanda_ginting" target="_blank" class="popup-button">Telegram Admin</a>
+                <a href="https://wa.me/6283842588255" target="_blank" class="popup-button">WhatsApp Admin</a>
+                <a href="https://t.me/@Faanzy18" target="_blank" class="popup-button">Telegram Admin</a>
             </div>
         </div>
     </div>
@@ -848,13 +909,124 @@
     <footer style="text-align:center; color:#8b949e; margin-top:50px;">© Faanzy Official</footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Initialize particle.js background
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#58a6ff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#58a6ff",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+
+        // All your existing JavaScript code remains exactly the same
         document.addEventListener('DOMContentLoaded', () => {
             // Konfigurasi
             const WEBSITE_ACCESS_KEY = "Faanzy-INFINITY2025";
             const BASE_URL_PTERODACTYL_API = "https://restapi.mat.web.id/api/pterodactyl/create?username=&ram=&disk=&cpu=&eggid=&nestid=&loc=&domain=&ptla=&ptlc=";
-            const TELEGRAM_BOT_TOKEN = "8102671545:AAEbT25jA8_n9136iT7YlbUQQueFAXaj9T4"; // Ganti dengan token bot Telegram Anda
-            const TELEGRAM_CHAT_ID = "7274253936"; // Ganti dengan chat ID tujuan
+            const TELEGRAM_BOT_TOKEN = "8102671545:AAEbT25jA8_n9136iT7YlbUQQueFAXaj9T4";
+            const TELEGRAM_CHAT_ID = "7274253936";
 
             const PACKAGES = {
                 "1gb": { ram: 1024, disk: 1024, cpu: 100, name: "1 GB" },
