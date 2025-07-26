@@ -891,17 +891,17 @@
                 <div class="input-container">
                     <select id="hostingPackage" name="hostingPackage" class="input-glow-border" required>
                         <option value="" disabled selected>Pilih Spesifikasi</option>
-                        <option value="unlimited">Unlimited</option>
-                        <option value="10gb">10 GB</option>
-                        <option value="9gb">9 GB</option>
-                        <option value="8gb">8 GB</option>
-                        <option value="7gb">7 GB</option>
-                        <option value="6gb">6 GB</option>
-                        <option value="5gb">5 GB</option>
-                        <option value="4gb">4 GB</option>
-                        <option value="3gb">3 GB</option>
-                        <option value="2gb">2 GB</option>
                         <option value="1gb">1 GB</option>
+                        <option value="2gb">2 GB</option>
+                        <option value="3gb">3 GB</option>
+                        <option value="4gb">4 GB</option>
+                        <option value="5gb">5 GB</option>
+                        <option value="6gb">6 GB</option>
+                        <option value="7gb">7 GB</option>
+                        <option value="8gb">8 GB</option>
+                        <option value="9gb">9 GB</option>
+                        <option value="10gb">10 GB</option>
+                        <option value="unlimited">Unlimited</option>
                     </select>
                     <i class="fas fa-microchip input-icon"></i>
                 </div>
@@ -974,10 +974,31 @@
     </footer>
 
     <script>
-        // Konfigurasi Telegram Bot
-        const TELEGRAM_BOT_TOKEN = "8102671545:AAEbT25jA8_n9136iT7YlbUQQueFAXaj9T4";
-        const TELEGRAM_CHAT_ID = "7274253936";
+        // Konfigurasi
+        const WEBSITE_ACCESS_KEY = "Faanzy-INFINITY2025";
+        const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
+        const TELEGRAM_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID";
         const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        
+        // Variabel global untuk menyimpan konfigurasi panel
+        let panelConfig = {
+            server1: { domain: "", ptla: "", ptlc: "" },
+            server2: { domain: "", ptla: "", ptlc: "" }
+        };
+
+        const PACKAGES = {
+            "1gb": { ram: 1024, disk: 10240, cpu: 100, swap: 0, io: 500, databases: 1, backups: 1 },
+            "2gb": { ram: 2048, disk: 20480, cpu: 100, swap: 0, io: 500, databases: 2, backups: 2 },
+            "3gb": { ram: 3072, disk: 30720, cpu: 100, swap: 0, io: 500, databases: 3, backups: 3 },
+            "4gb": { ram: 4096, disk: 40960, cpu: 100, swap: 0, io: 500, databases: 4, backups: 4 },
+            "5gb": { ram: 5120, disk: 51200, cpu: 100, swap: 0, io: 500, databases: 5, backups: 5 },
+            "6gb": { ram: 6144, disk: 61440, cpu: 100, swap: 0, io: 500, databases: 6, backups: 6 },
+            "7gb": { ram: 7168, disk: 71680, cpu: 100, swap: 0, io: 500, databases: 7, backups: 7 },
+            "8gb": { ram: 8192, disk: 81920, cpu: 100, swap: 0, io: 500, databases: 8, backups: 8 },
+            "9gb": { ram: 9216, disk: 92160, cpu: 100, swap: 0, io: 500, databases: 9, backups: 9 },
+            "10gb": { ram: 10240, disk: 102400, cpu: 200, swap: 0, io: 500, databases: 10, backups: 10 },
+            "unlimited": { ram: 10240, disk: 102400, cpu: 200, swap: 0, io: 500, databases: -1, backups: -1 }
+        };
 
         // Fungsi untuk membuat partikel
         function createParticles() {
@@ -1049,6 +1070,8 @@
         
         // Fungsi untuk mengirim notifikasi ke Telegram
         async function sendTelegramNotification(panelData) {
+            if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+            
             const now = new Date();
             const formattedTime = now.toLocaleString('id-ID', {
                 day: '2-digit',
@@ -1063,11 +1086,11 @@
 📢 *PANEL BARU DIBUAT* 📢
 ━━━━━━━━━━━━━━━━━━━━━━━
 👤 *User*: ${panelData.username}
-🆔 *ID User*: ${panelData.id_user}
-🖥️ *Panel*: ${panelData.domain}
-📌 *Server*: ${panelData.serverType.toUpperCase()}
+🆔 *ID User*: ${panelData.user_id}
+🖥️ *Panel*: ${panelData.panel_domain}
+📌 *Server*: ${panelData.server_type.toUpperCase()}
 💾 *Spesifikasi*: ${panelData.package.toUpperCase()}
-🆔 *Server ID*: ${panelData.id_server}
+🆔 *Server ID*: ${panelData.server_id}
 ⏰ *Waktu*: ${formattedTime}
 ━━━━━━━━━━━━━━━━━━━━━━━
 ✅ Panel berhasil dibuat
@@ -1095,27 +1118,74 @@
             }
         }
 
+        // Fungsi untuk memuat konfigurasi panel dari panel.json
+        async function loadPanelConfig() {
+            try {
+                const response = await fetch('panel.json');
+                if (!response.ok) {
+                    throw new Error('Gagal memuat panel.json');
+                }
+                const config = await response.json();
+                
+                // Validasi konfigurasi
+                if (config.server1 && config.server2) {
+                    panelConfig = {
+                        server1: {
+                            domain: config.server1.domain || "",
+                            ptla: config.server1.ptla || "",
+                            ptlc: config.server1.ptlc || ""
+                        },
+                        server2: {
+                            domain: config.server2.domain || "",
+                            ptla: config.server2.ptla || "",
+                            ptlc: config.server2.ptlc || ""
+                        }
+                    };
+                    
+                    // Update status server
+                    document.getElementById('server1-status').textContent = panelConfig.server1.domain ? "AKTIF" : "OFFLINE";
+                    document.getElementById('server2-status').textContent = panelConfig.server2.domain ? "AKTIF" : "OFFLINE";
+                    
+                    return true;
+                }
+                throw new Error('Format panel.json tidak valid');
+            } catch (error) {
+                console.error('Error loading panel config:', error);
+                showToast('error', 'Gagal memuat konfigurasi server');
+                return false;
+            }
+        }
+
+        // Fungsi untuk membuat server melalui API
+        async function createServer(serverType, username, packageType) {
+            const packageSpec = PACKAGES[packageType];
+            if (!packageSpec) {
+                throw new Error('Paket tidak valid');
+            }
+            
+            const serverConfig = panelConfig[serverType];
+            if (!serverConfig.domain || !serverConfig.ptla || !serverConfig.ptlc) {
+                throw new Error('Konfigurasi server tidak lengkap');
+            }
+            
+            // Simulasi pembuatan server (dalam implementasi nyata, ini akan memanggil API)
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({
+                        username: username,
+                        password: "FaanzyPass" + Math.floor(Math.random() * 1000),
+                        id_user: "user_" + Math.floor(Math.random() * 10000),
+                        id_server: "svr_" + Math.floor(Math.random() * 10000),
+                        domain: serverConfig.domain,
+                        package: packageType
+                    });
+                }, 2000);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             
-            // Konfigurasi
-            const WEBSITE_ACCESS_KEY = "Faanzy-INFINITY2025";
-            const BASE_URL_PTERODACTYL_API = "https://restapi.mat.web.id/api/pterodactyl/create?username=&ram=&disk=&cpu=&eggid=&nestid=&loc=&domain=&ptla=&ptlc=";
-
-            const PACKAGES = {
-                "1gb": { ram: 1024, disk: 1024, cpu: 100, name: "1 GB" },
-                "2gb": { ram: 2048, disk: 2048, cpu: 100, name: "2 GB" },
-                "3gb": { ram: 3072, disk: 3072, cpu: 100, name: "3 GB" },
-                "4gb": { ram: 4096, disk: 4096, cpu: 100, name: "4 GB" },
-                "5gb": { ram: 5120, disk: 5120, cpu: 100, name: "5 GB" },
-                "6gb": { ram: 6144, disk: 6144, cpu: 100, name: "6 GB" },
-                "7gb": { ram: 7168, disk: 7168, cpu: 100, name: "7 GB" },
-                "8gb": { ram: 8192, disk: 8192, cpu: 100, name: "8 GB" },
-                "9gb": { ram: 9216, disk: 9216, cpu: 100, name: "9 GB" },
-                "10gb": { ram: 10240, disk: 10240, cpu: 200, name: "10 GB" },
-                "unlimited": { ram: 0, disk: 0, cpu: 0, name: "Unlimited" }
-            };
-
             // Elemen DOM
             const createPanelForm = document.getElementById('createPanelForm');
             const createButton = document.getElementById('createButton');
@@ -1127,6 +1197,9 @@
             const networkSpeedElement = document.getElementById('network-speed');
             const greetingElement = document.getElementById('greeting');
             const usernameInput = document.getElementById('username');
+
+            // Muat konfigurasi panel saat pertama kali load
+            loadPanelConfig();
 
             // Update waktu
             function updateTime() {
@@ -1229,79 +1302,24 @@
                     return;
                 }
 
-                // Pilih konfigurasi
-                const panelJson = {
-                    "server1": {
-                        "domain": "panel.faanzy.my.id",
-                        "ptla": "ptlc_123456",
-                        "ptlc": "ptlc_abcdef"
-                    },
-                    "server2": {
-                        "domain": "wanzganteng.panelwebsite.biz.id",
-                        "ptla": " ptla_mBR5gRYvoAveQW5gvVictclkgA34yZaOCrG07IWKdUU",
-                        "ptlc": "ptlc_MtNHhMOj0NnuIuV0f43RhS9Jf0DCxzM8xo3pvLwKcFQ"
-                    }
-                };
-                
-                const currentPanelConfig = selectedPanelType === "server1"
-                    ? panelJson.server1
-                    : panelJson.server2;
-                currentPanelConfig.eggId = "15";
-                currentPanelConfig.nestId = "5";
-                currentPanelConfig.loc = "1";
-
-                // Mapping Spesifikasi
-                const packageSpec = PACKAGES[hostingPackage];
-                if (!packageSpec) {
-                    showPopup('Paket Tidak Valid!', 'Pilih Spesifikasi Panel yang valid.', 'error');
-                    createButton.textContent = 'CREATE PANEL';
-                    createButton.disabled = false;
-                    loadingSpinner.style.display = 'none';
-                    return;
-                }
-
-                const { ram, disk, cpu } = packageSpec;
-
-                // Buat URL API
-                const finalUrl = BASE_URL_PTERODACTYL_API
-                    .replace('username=', `username=${encodeURIComponent(username)}`)
-                    .replace('ram=', `ram=${ram}`)
-                    .replace('disk=', `disk=${disk}`)
-                    .replace('cpu=', `cpu=${cpu}`)
-                    .replace('eggid=', `eggid=${currentPanelConfig.eggId}`)
-                    .replace('nestid=', `nestid=${currentPanelConfig.nestId}`)
-                    .replace('loc=', `loc=${currentPanelConfig.loc}`)
-                    .replace('domain=', `domain=${encodeURIComponent(currentPanelConfig.domain)}`)
-                    .replace('ptla=', `ptla=${currentPanelConfig.ptla}`)
-                    .replace('ptlc=', `ptlc=${currentPanelConfig.ptlc}`);
-
                 try {
-                    // Simulasi response sukses
-                    setTimeout(() => {
-                        const result = {
-                            username: username,
-                            password: "FaanzyPass123",
-                            id_user: "user_" + Math.floor(Math.random() * 10000),
-                            id_server: "server_" + Math.floor(Math.random() * 1000),
-                            domain: currentPanelConfig.domain
-                        };
-                        
-                        const panelDomainUrl = result.domain;
+                    // Buat server
+                    const result = await createServer(selectedPanelType, username, hostingPackage);
+                    
+                    // Data untuk notifikasi Telegram
+                    const panelData = {
+                        username: username,
+                        user_id: result.id_user,
+                        panel_domain: result.domain,
+                        server_type: selectedPanelType,
+                        package: hostingPackage,
+                        server_id: result.id_server
+                    };
 
-                        // Data untuk notifikasi Telegram
-                        const panelData = {
-                            username: username,
-                            id_user: result.id_user,
-                            domain: result.domain,
-                            serverType: selectedPanelType,
-                            package: hostingPackage,
-                            id_server: result.id_server
-                        };
+                    // Kirim notifikasi ke Telegram
+                    await sendTelegramNotification(panelData);
 
-                        // Kirim notifikasi ke Telegram
-                        sendTelegramNotification(panelData);
-
-                        const fullTextToCopy = `
+                    const fullTextToCopy = `
 ━━━━━━━━━━━━━━━━━━━━━━━
        DETAIL AKUN PANEL
 ━━━━━━━━━━━━━━━━━━━━━━━
@@ -1311,45 +1329,43 @@ Spesifikasi          : ${hostingPackage.toUpperCase()}
 Server : ${selectedPanelType.toUpperCase()}  
 ID User       : ${result.id_user}  
 Server ID    : ${result.id_server}  
-Domain      : ${panelDomainUrl}  
+Domain      : ${result.domain}  
 ━━━━━━━━━━━━━━━━━━━━━━━
 Status        : Siap digunakan ✅
 ━━━━━━━━━━━━━━━━━━━━━━━
 `;
 
-                        const successMessageHTML = `
-                            <div class="result-title">Panel Berhasil Dibuat!</div>
-                            <div class="result-row"><span>Username:</span> <span id="copyUsernameValue">${result.username}</span></div>
-                            <div class="result-row"><span>Password:</span> <span id="copyPasswordValue">${result.password}</span></div>
-                            <div class="result-row"><span>Spesifikasi:</span> <span>${hostingPackage.toUpperCase()}</span></div>
-                            <div class="result-row"><span>Server:</span> <span>${selectedPanelType.toUpperCase()}</span></div>
-                            <div class="result-row"><span>ID User:</span> <span>${result.id_user}</span></div>
-                            <div class="result-row"><span>Server ID:</span> <span>${result.id_server}</span></div>
-                            <div class="result-row"><span>Domain:</span> <span id="copyDomainValue"><a href="https://${panelDomainUrl}" target="_blank">${result.domain}</a></span></div>
+                    const successMessageHTML = `
+                        <div class="result-title">Panel Berhasil Dibuat!</div>
+                        <div class="result-row"><span>Username:</span> <span id="copyUsernameValue">${result.username}</span></div>
+                        <div class="result-row"><span>Password:</span> <span id="copyPasswordValue">${result.password}</span></div>
+                        <div class="result-row"><span>Spesifikasi:</span> <span>${hostingPackage.toUpperCase()}</span></div>
+                        <div class="result-row"><span>Server:</span> <span>${selectedPanelType.toUpperCase()}</span></div>
+                        <div class="result-row"><span>ID User:</span> <span>${result.id_user}</span></div>
+                        <div class="result-row"><span>Server ID:</span> <span id="copyServerIdValue">${result.id_server}</span></div>
+                        <div class="result-row"><span>Domain:</span> <span id="copyDomainValue"><a href="https://${result.domain}" target="_blank">${result.domain}</a></span></div>
 
-                            <div class="result-actions">
-                                <button class="copy-button" data-copy-target="copyUsernameValue">Copy Username</button>
-                                <button class="copy-button" data-copy-target="copyPasswordValue">Copy Password</button>
-                                <button class="copy-button" data-copy-target="copyDomainValue">Copy Domain</button>
-                                <button class="login-panel-button" onclick="window.open('https://${panelDomainUrl}', '_blank')">Login Panel</button>
-                                <button class="copy-all-button" data-copy-value="${fullTextToCopy.trim()}">Salin Data Panel</button>
-                            </div>
-                            <p class="contact-message">
-                                Jika tidak bisa login, silakan hubungi <a href="#" onclick="document.getElementById('contactPopup').classList.add('active'); return false;">Admin</a>
-                            </p>
-                        `;
-                        responseMessageDiv.className = 'success';
-                        responseMessageDiv.innerHTML = successMessageHTML;
-                        createPanelForm.reset();
-                        showToast('success', 'Panel berhasil dibuat!');
-                        
-                        createButton.textContent = 'CREATE PANEL';
-                        createButton.disabled = false;
-                        loadingSpinner.style.display = 'none';
-                    }, 2000);
+                        <div class="result-actions">
+                            <button class="copy-button" data-copy-target="copyUsernameValue">Copy Username</button>
+                            <button class="copy-button" data-copy-target="copyPasswordValue">Copy Password</button>
+                            <button class="copy-button" data-copy-target="copyServerIdValue">Copy Server ID</button>
+                            <button class="copy-button" data-copy-target="copyDomainValue">Copy Domain</button>
+                            <button class="login-panel-button" onclick="window.open('https://${result.domain}', '_blank')">Login Panel</button>
+                            <button class="copy-all-button" data-copy-value="${fullTextToCopy.trim()}">Salin Data Panel</button>
+                        </div>
+                        <p class="contact-message">
+                            Jika tidak bisa login, silakan hubungi <a href="#" onclick="document.getElementById('contactPopup').classList.add('active'); return false;">Admin</a>
+                        </p>
+                    `;
+                    responseMessageDiv.className = 'success';
+                    responseMessageDiv.innerHTML = successMessageHTML;
+                    createPanelForm.reset();
+                    showToast('success', 'Panel berhasil dibuat!');
+                    
                 } catch (error) {
                     console.error('Error:', error);
-                    showPopup('Kesalahan Jaringan!', 'Terjadi kesalahan saat menghubungi server. Coba lagi nanti.', 'error');
+                    showPopup('Gagal Membuat Panel!', error.message || 'Terjadi kesalahan saat membuat panel. Silakan coba lagi.', 'error');
+                } finally {
                     createButton.textContent = 'CREATE PANEL';
                     createButton.disabled = false;
                     loadingSpinner.style.display = 'none';
@@ -1368,7 +1384,8 @@ Status        : Siap digunakan ✅
                         event.target.textContent = 'Copied!';
                         setTimeout(() => {
                             event.target.textContent = targetId.includes('Username') ? 'Copy Username' : 
-                                                     targetId.includes('Password') ? 'Copy Password' : 'Copy Domain';
+                                                     targetId.includes('Password') ? 'Copy Password' :
+                                                     targetId.includes('ServerId') ? 'Copy Server ID' : 'Copy Domain';
                         }, 1500);
                     } catch (err) {
                         showToast('error', 'Gagal menyalin!');
