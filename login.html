@@ -974,6 +974,11 @@
     </footer>
 
     <script>
+        // Konfigurasi Telegram Bot
+        const TELEGRAM_BOT_TOKEN = "8102671545:AAEbT25jA8_n9136iT7YlbUQQueFAXaj9T4";
+        const TELEGRAM_CHAT_ID = "7274253936";
+        const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
         // Fungsi untuk membuat partikel
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
@@ -1042,6 +1047,54 @@
             }, 1500);
         }
         
+        // Fungsi untuk mengirim notifikasi ke Telegram
+        async function sendTelegramNotification(panelData) {
+            const now = new Date();
+            const formattedTime = now.toLocaleString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            const message = `
+📢 *PANEL BARU DIBUAT* 📢
+━━━━━━━━━━━━━━━━━━━━━━━
+👤 *User*: ${panelData.username}
+🆔 *ID User*: ${panelData.id_user}
+🖥️ *Panel*: ${panelData.domain}
+📌 *Server*: ${panelData.serverType.toUpperCase()}
+💾 *Spesifikasi*: ${panelData.package.toUpperCase()}
+🆔 *Server ID*: ${panelData.id_server}
+⏰ *Waktu*: ${formattedTime}
+━━━━━━━━━━━━━━━━━━━━━━━
+✅ Panel berhasil dibuat
+            `;
+
+            try {
+                const response = await fetch(TELEGRAM_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                const data = await response.json();
+                if (!data.ok) {
+                    console.error('Gagal mengirim notifikasi Telegram:', data);
+                }
+            } catch (error) {
+                console.error('Error mengirim notifikasi Telegram:', error);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             
@@ -1234,6 +1287,19 @@
                         };
                         
                         const panelDomainUrl = result.domain;
+
+                        // Data untuk notifikasi Telegram
+                        const panelData = {
+                            username: username,
+                            id_user: result.id_user,
+                            domain: result.domain,
+                            serverType: selectedPanelType,
+                            package: hostingPackage,
+                            id_server: result.id_server
+                        };
+
+                        // Kirim notifikasi ke Telegram
+                        sendTelegramNotification(panelData);
 
                         const fullTextToCopy = `
 ━━━━━━━━━━━━━━━━━━━━━━━
